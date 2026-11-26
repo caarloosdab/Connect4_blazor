@@ -1,0 +1,105 @@
+﻿.game-board {
+    --cell-size: 4em;
+    --disc-size: 3.5em;
+    --inset: calc((var(--cell-size) - var(--disc-size)) / 2);
+    --frame-width: 10px;
+    position: relative;
+    isolation: isolate;
+    width: max-content;
+    margin-top: 1em;
+    overflow: hidden;
+}
+
+nav {
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+nav button {
+    width: 4em;
+    border: 0;
+    background: transparent;
+}
+
+nav button:enabled {
+    cursor: pointer;
+}
+
+article {
+    margin-top: .5em;
+}
+
+.board {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(7, var(--cell-size));
+    grid-template-rows: repeat(6, var(--cell-size));
+    border-inline: var(--frame-width) solid var(--board-bg);
+    pointer-events: none;
+}
+
+.board .container {
+    position: relative;
+    width: var(--cell-size);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container span,
+.player1,
+.player2 {
+    position: absolute;
+    width: var(--disc-size);
+    height: var(--disc-size);
+    border-radius: 50%;
+}
+
+.container span {
+    top: var(--inset);
+    left: var(--inset);
+    box-shadow: 0 0 0 var(--cell-size) var(--board-bg);
+}
+
+.player1,
+.player2 {
+    left: calc(var(--frame-width) + var(--column) * var(--cell-size) + var(--inset));
+    top: calc(var(--row) * var(--cell-size) + var(--inset));
+    animation: drop var(--drop-duration) cubic-bezier(.5, .05, .9, .6);
+}
+
+.player1 { background-color: var(--player1); }
+.player2 { background-color: var(--player2); }
+
+.col0 { --column: 0; }
+.col1 { --column: 1; }
+.col2 { --column: 2; }
+.col3 { --column: 3; }
+.col4 { --column: 4; }
+.col5 { --column: 5; }
+.col6 { --column: 6; }
+
+.drop1 { --row: 0; --drop-duration: .25s; }
+.drop2 { --row: 1; --drop-duration: .35s; }
+.drop3 { --row: 2; --drop-duration: .45s; }
+.drop4 { --row: 3; --drop-duration: .55s; }
+.drop5 { --row: 4; --drop-duration: .65s; }
+.drop6 { --row: 5; --drop-duration: .75s; }
+
+@keyframes drop {
+    from {
+        transform: translateY(calc(-1 * (var(--row) * var(--cell-size) + var(--inset) + var(--disc-size))));
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .player1,
+    .player2 {
+        animation: none;
+    }
+}
