@@ -1,8 +1,23 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@using System.Drawing
 
 <PageTitle>Index</PageTitle>
 
+<fieldset class="mb-3">
+    <legend>Game piece colors</legend>
+    <label for="player1-color">Player 1</label>
+    <input id="player1-color" type="color" @bind="player1Color" />
+
+    <label for="player2-color" class="ms-3">Player 2</label>
+    <input id="player2-color" type="color" @bind="player2Color" />
+</fieldset>
+
 <Board BoardColor="System.Drawing.Color.Black"
-       Player1Color="System.Drawing.Color.Green"
-       Player2Color="System.Drawing.Color.Purple" />
+       Player1Color="ColorTranslator.FromHtml(player1Color)"
+       Player2Color="ColorTranslator.FromHtml(player2Color)" />
+
+@code {
+    private string player1Color = "#008000";
+    private string player2Color = "#800080";
+}

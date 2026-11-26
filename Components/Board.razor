@@ -1,16 +1,6 @@
 ﻿@using System.Drawing
 @inject GameState State
 
-<HeadContent>
-    <style>
-        :root {
-            --board-bg: @ColorTranslator.ToHtml(BoardColor);
-            --player1: @ColorTranslator.ToHtml(Player1Color);
-            --player2: @ColorTranslator.ToHtml(Player2Color);
-        }
-    </style>
-</HeadContent>
-
 <nav aria-label="Drop a piece">
     @for (byte i = 0; i < 7; i++)
     {
@@ -29,7 +19,7 @@
     <div role="alert" class="alert-danger">@errorMessage</div>
 </article>
 
-<div class="game-board" role="img" aria-label="Connect Four board with seven columns and six rows">
+<div class="game-board" style="@BoardStyle" role="img" aria-label="Connect Four board with seven columns and six rows">
     <div class="board">
         @for (var i = 0; i < 42; i++)
         {
@@ -50,6 +40,7 @@
     private string errorMessage = string.Empty;
 
     private string CurrentTurn => $"Player {State.PlayerTurn}'s Turn";
+    private string BoardStyle => $"--board-bg: {ColorTranslator.ToHtml(BoardColor)}; --player1: {ColorTranslator.ToHtml(Player1Color)}; --player2: {ColorTranslator.ToHtml(Player2Color)};";
 
     [Parameter]
     public Color BoardColor { get; set; } = ColorTranslator.FromHtml("yellow");
